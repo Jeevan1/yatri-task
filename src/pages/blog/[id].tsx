@@ -1,37 +1,56 @@
-import { BlogPost, getBlogPostBySlug } from "@/utils/api-service";
+import { BlogPost } from "@/types/types";
+import { getBlogPostBySlug } from "@/utils/api-service";
 import { formatDateTime } from "@/utils/helpers";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { title } from "process";
 import { CiCalendarDate } from "react-icons/ci";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 interface BlogPostPageProps {
   post: BlogPost | null;
   title: string | undefined;
+  error?: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params as { id: string };
-  const post = await getBlogPostBySlug(Number(id));
+  try {
+    const post = await getBlogPostBySlug(Number(id));
 
-  return {
-    props: {
-      post: post || null,
-      title: post?.title,
-    },
-  };
+    return {
+      props: {
+        post: post || null,
+        title: post?.title || "Blog Post",
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        post: null,
+        title: "Blog Post",
+        error: "Failed to fetch blog post",
+      },
+    };
+  }
 };
 
-export default function BlogPostPage({ post, title }: BlogPostPageProps) {
-  if (!post) {
+export default function BlogPostPage({
+  post,
+  title,
+  error,
+}: BlogPostPageProps) {
+  if (!post || error) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">
-          Post not found
+      <div className="container py-8">
+        <h1 className="text-xl md:text-3xl font-bold mb-8  text-gray-800">
+          {error || "No blog post found"}
         </h1>
-        <Link href="/" className="text-blue-500 hover:underline">
+        <Link
+          href="/"
+          className="text-blue-500 hover:underline mb-4 inline-flex items-center gap-1"
+        >
+          <FaArrowLeftLong />
           Back to homepage
         </Link>
       </div>
