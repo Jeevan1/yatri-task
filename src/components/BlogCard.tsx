@@ -1,6 +1,4 @@
-"use client";
-
-import { BlogPost } from "@/utils/api-service";
+import { BlogPost } from "@/types/types";
 import { formatDateTime } from "@/utils/helpers";
 import Link from "next/link";
 import { CiCalendarDate } from "react-icons/ci";
