@@ -62,4 +62,4 @@ Make sure you have the following installed:
 └── next.config.js
 ```
 
-**GitHub Repository:** [Your Repository Link](https://github.com/Jeevan1/yatri-task)
+**GitHub Repository:** [Project Link](https://github.com/Jeevan1/yatri-task)
