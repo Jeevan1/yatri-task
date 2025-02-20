@@ -26,8 +26,9 @@ export default function BlogList({ post, error }: BlogListProps) {
       setCurrentPage(1);
       setLoading(false);
     } catch (error) {
+      console.error("Error fetching search results:", error);
       setLoading(false);
-      setErrorMessage("Failed to fetch blog posts.");
+      setErrorMessage(`Error fetching search results: ${error}`);
     }
   };
 
@@ -35,6 +36,16 @@ export default function BlogList({ post, error }: BlogListProps) {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(posts.length / postsPerPage);
+
+  if (error) {
+    return (
+      <div className="container py-8">
+        <h1 className="text-xl md:text-3xl font-bold mb-8 border-b-2 border-gray-200 pb-3 text-gray-800">
+          {error}
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="container py-8">

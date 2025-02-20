@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {
         post: null,
         title: "Blog Post",
-        error: "Failed to fetch blog post",
+        error: error || "Failed to fetch blog post",
       },
     };
   }

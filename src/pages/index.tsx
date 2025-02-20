@@ -46,7 +46,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       props: {
         initialPosts: [],
-        error: "Failed to fetch blog posts.",
+        error: error || "Failed to fetch blog posts.",
       },
       revalidate: 60,
     };
